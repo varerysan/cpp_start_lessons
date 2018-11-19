@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <array>
+#include <vector>
 
 class Statistics
 {
@@ -9,7 +10,7 @@ public:
     
     void clear()
     {
-        for( const auto &s : stat) s = 0;
+        for( auto &s : stat) s = 0;
     }
 
     Statistics()
@@ -19,12 +20,21 @@ public:
     
     
     
-    void addData( const vector<uint_8> data )
+    void addData( const std::vector<uint8_t> data )
     {
         clear();
         for(const auto d : data)
         {
             stat[d]++;
+        }
+    }
+    
+    void print()
+    {
+        for( int k = 0; k < 256; k++ )
+        {
+            int num = stat[k];
+            std::cout << k << ":" << num << std::endl;
         }
     }
     
@@ -39,7 +49,7 @@ public:
     
     const int max_size = 65536;
     
-    vector<uint_8> buffer;
+    std::vector<uint8_t> buffer;
     
     Processor()
     {
@@ -49,34 +59,43 @@ public:
     
     void addFile(std::string name)
     {
-        
+        std::ifstream file(name, std::ios::binary);
         char value;
+        
         while( file.get(value) && buffer.size() < max_size )
         {
             int v = value;
-            std::cout << "v=" << v << std::endl;
+            if( v < 0 ) v = 256 + v;
+            buffer.push_back(v);
+            std::cout << "pv=" << std::hex <<v << std::endl;
         }
+        
+        statistics.addData(buffer);
     
+    }
+    
+    void print()
+    {
+        int pos = 0;
+        for(const auto &v : buffer)
+        {
+            int k = v;
+            std::cout << pos << " k=" << std::hex << k << std::endl;
+            pos++;
+        }
+        std::cout << "----------------------" << std::endl;
+        statistics.print();
     }
 
 };
 
 void read()
 {
-    std::ifstream file("data.txt", std::ios::binary);
-    if( ! file )
-    {
-        std::cout << "Can't open file" <<std::endl;
-        return;
-    }
+    Processor processor;
+    processor.addFile("data.txt");
+    processor.print();
     
-    char value;
-    while( file.get(value) )
-    {
-        int v = value;
-        std::cout << "v=" << v << std::endl;
-    }
-
+    return;
 }
 
 int main()
