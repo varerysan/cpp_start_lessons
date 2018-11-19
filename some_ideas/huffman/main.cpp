@@ -3,6 +3,26 @@
 #include <array>
 #include <vector>
 
+
+
+class Pair
+{
+public:
+    uint8_t value;
+    int count;
+    
+    Pair( uint8_t v, int c):
+        value(v), count(c)
+    {
+    }
+    
+    bool operator < ( const Pair &other ) const
+    {
+        return count > other.count;
+    }
+};
+
+
 class Statistics
 {
 public:
@@ -27,6 +47,11 @@ public:
         {
             stat[d]++;
         }
+        copyToPairs();
+        sort(statPairs.begin(), statPairs.end() );
+        std::cout << "----------3------------" << std::endl;
+        printPairs();
+        
     }
     
     void print()
@@ -38,8 +63,32 @@ public:
         }
     }
     
+    std::vector<Pair> statPairs;
+    void copyToPairs()
+    {
+        statPairs.clear();
+        for( int k = 0; k < 256; k++ )
+        {
+            int num = stat[k];
+            if( num > 0 )
+            {
+                Pair pair(k,num);
+                statPairs.push_back(pair);
+            }
+        }
+    }
     
-
+    void printPairs()
+    {
+        for( const auto &p: statPairs )
+        {
+            int v = p.value;
+            std::cout << v << ":" << p.count << std::endl;
+        
+        }
+    }
+    
+    
 };
 
 class Processor
@@ -83,8 +132,10 @@ public:
             std::cout << pos << " k=" << std::hex << k << std::endl;
             pos++;
         }
-        std::cout << "----------------------" << std::endl;
+        std::cout << "-----------1-----------" << std::endl;
         statistics.print();
+        std::cout << "-----------2-----------" << std::endl;
+        statistics.printPairs();
     }
 
 };
