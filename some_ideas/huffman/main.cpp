@@ -4,7 +4,6 @@
 #include <vector>
 
 
-
 class Pair
 {
 public:
@@ -37,7 +36,6 @@ public:
     {
         clear();
     }
-    
     
     
     void addData( const std::vector<uint8_t> data )
@@ -87,9 +85,43 @@ public:
         
         }
     }
-    
-    
 };
+
+class PairNode
+{
+public:
+    int count;
+};
+
+
+
+class Tree
+{
+public:
+    
+    std::vector<pairNode> nodes;
+    
+    void addPairs(const std::vector<Pair> &pairs)
+    {
+        
+        
+        
+    }
+    
+    void processStatistic()
+    {
+
+
+    }
+    
+    void findMinNodes()
+    {
+        
+    }
+
+
+};
+
 
 class Processor
 {
@@ -103,8 +135,9 @@ public:
     Processor()
     {
         buffer.reserve(max_size);
-    
     }
+    
+    
     
     void addFile(std::string name)
     {
@@ -120,7 +153,11 @@ public:
         }
         
         statistics.addData(buffer);
+    }
     
+    void processStatistics()
+    {
+        
     }
     
     void print()
