@@ -4,6 +4,12 @@
 #include <vector>
 
 
+//class BasePair
+//{
+//public:
+//    int count;
+//};
+
 class Pair
 {
 public:
@@ -87,6 +93,15 @@ public:
     }
 };
 
+
+
+class Node
+{
+    
+};
+
+
+
 class PairNode
 {
 public:
@@ -95,16 +110,17 @@ public:
 
 
 
+
 class Tree
 {
 public:
     
-    std::vector<pairNode> nodes;
+    std::vector<PairNode> nodes;
+    std::vector<PairNode> nodes2;
     
     void addPairs(const std::vector<Pair> &pairs)
     {
-        
-        
+        nodes = pairs;
         
     }
     
@@ -116,6 +132,13 @@ public:
     
     void findMinNodes()
     {
+        
+    }
+    
+    // find tow miximum values
+    void findMax()
+    {
+        
         
     }
 
